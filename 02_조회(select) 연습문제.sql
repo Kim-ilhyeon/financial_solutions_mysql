@@ -1,3 +1,4 @@
+use tdb;
 -- 1. 이름이 '연'으로 끝나는 사원들의 사원명, 입사일 조회
 SELECT 
     emp_name, hire_date
@@ -103,7 +104,8 @@ WHERE
         AND job_code <> 'J3';
 
 -- 13. 2000년 1월 1일 이전에 입사한 사원들의 사원명, 입사일, 실수령 월급(기본급 + 보너스 금액) 조회 (단, 보너스가 없는 사원은 0으로 계산할 것)
-select emp_name, ifnull((salary + (salary * bonus)) * 12, 0) AS '실수령 월급(기본급 + 보너스 금액)'
+-- select emp_name, ifnull((salary + (salary * bonus)) * 12, 0) AS '실수령 월급(기본급 + 보너스 금액)'
+select emp_name, salary + (salary * ifnull(bonus, 0)) as '실수령 월급'
 from employee
 where hire_date < '2000-01-01';
 
