@@ -338,20 +338,62 @@ SELECT EMP_NAME, JOB_CODE, SALARY,
 	END AS '인상 후'
 FROM EMPLOYEE;
 
+-- ------------------ 그룹 함수 ------------------
+-- 특정 그룹에 함수를 적용해서 하나의 결과를 반환
 
+-- SUM(컬럼) : 총 합계
+SELECT 
+    SUM(SALARY)
+FROM
+    EMPLOYEE;
 
+-- 남자사원들의 총 급여
+SELECT SUM(SALARY)
+FROM EMPLOYEE
+WHERE SUBSTRING(EMP_NO, 8, 1) IN ('1', '3');
 
+-- AVG(컬럼) : 평균
+SELECT AVG(SALARY)
+FROM EMPLOYEE;
 
+-- MIN(컬럼) : 최솟값
+SELECT MIN(SALARY)
+FROM EMPLOYEE;
 
+-- MAX(컬럼) : 최댓값
+SELECT MAX(SALARY)
+FROM EMPLOYEE;
 
+SELECT AVG(SALARY), MIN(EMP_NAME), MAX(HIRE_DATE)
+FROM EMPLOYEE;
 
+-- COUNT(* | 컬럼 | DISTINCT 컬럼) : 행의 갯수
+-- COUNT(*) : NULL포함 모든 행의 갯수
+-- COUNT(컬럼) : 해당컬럼이 NULL이 아닌 데이터의 갯수
+-- COUNT(DISTINCT 컬럼) : 고유한 컬럼값의 갯수
 
+-- 전체 사원 수
+SELECT COUNT(EMP_NAME)
+FROM EMPLOYEE;
 
+SELECT COUNT(*)
+FROM EMPLOYEE;
 
+SELECT COUNT(BONUS)
+FROM EMPLOYEE;
 
+-- 보너스를 받지 않는사람
+SELECT COUNT(*)
+FROM EMPLOYEE
+WHERE BONUS IS NULL;
 
+-- 부서의 종류 갯수
+SELECT COUNT(DISTINCT DEPT_CODE)
+FROM EMPLOYEE;
 
-
-
-
-
+-- SELECT문의 기본 실행 순서
+/*
+	SELECT 컬럼, 컬럼...		-- 3
+    FROM 테이블명				-- 1
+    WHERE 조건식;				-- 2
+*/
