@@ -21,7 +21,8 @@ FROM EMPLOYEE;
 -- 문제 5. 
 -- 입사년도가 2000년 이상인 사원들의 사원명, 입사일, 정직원 전환일(입사일 기준 6개월 뒤)을 조회하시오.
 SELECT EMP_NAME, HIRE_DATE, DATE_ADD(HIRE_DATE, INTERVAL 6 MONTH) AS '정직원 전환일'
-FROM EMPLOYEE;
+FROM EMPLOYEE
+WHERE YEAR(HIRE_DATE) >= 2000;
 
 -- 문제 6. 
 -- 사원들의 사원명, 급여, 입사일을 조회하시오. 
@@ -46,6 +47,10 @@ SELECT EMP_NAME, HIRE_DATE,
 		CASE
 			WHEN HIRE_DATE < '2000-01-01' THEN '창립멤버'
             WHEN HIRE_DATE BETWEEN '2000-01-01' AND '2010-12-31' THEN '핵심멤버'
+            /*
+            WHEN YEAR(HIRE_DATE) < 2000 THEN '창립멤버'
+            WHEN YEAR(HIRE_DATE) <= 2010 THEN '핵심멤버'
+            */
             ELSE '신규멤버'
 		END AS '근무형태'
 FROM EMPLOYEE;
