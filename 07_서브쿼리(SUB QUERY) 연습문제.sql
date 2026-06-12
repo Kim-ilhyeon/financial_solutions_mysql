@@ -63,7 +63,12 @@ WHERE JOB_NAME = '대리'
 -- 다른 사원의 관리자(MANAGER_ID)로 지정되지 않은 일반 평사원들의 사원명, 부서코드, 직급코드를 조회하시오.
 SELECT EMP_NAME, DEPT_CODE, JOB_CODE
 FROM EMPLOYEE
-WHERE MANAGER_ID IS NULL;
+WHERE EMP_ID NOT IN (
+	-- MANAGER_ID가 NULL이 아닌 MANAGER_ID를 중복없이 조회
+	SELECT DISTINCT MANAGER_ID
+    FROM EMPLOYEE
+    WHERE MANAGER_ID IS NOT NULL
+	);
 
 -- 문제 7.
 -- '유재식' 사원과 같은 부서코드, 같은 직급코드를 가지는 사원들의 사원명, 부서코드, 직급코드를 조회하시오.
