@@ -15,3 +15,10 @@ FLUSH PRIVILEGES;
 
 -- 5. 권한 확인 (방금 만든 server 계정의 권한이 잘 들어갔는지 확인)
 SHOW GRANTS FOR 'server'@'localhost';
+
+
+CREATE DATABASE ddltdb 
+    DEFAULT CHARACTER SET utf8mb4
+    DEFAULT COLLATE utf8mb4_unicode_ci;
+
+    
