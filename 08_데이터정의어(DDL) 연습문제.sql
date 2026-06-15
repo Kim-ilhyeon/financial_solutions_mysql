@@ -2,6 +2,7 @@ use ddltdb;
 -- 문제 1. (테이블 생성 - 기본)
 -- 부서 정보를 저장할 TB_DEPT 테이블을 생성하시오.
 -- 컬럼: DEPT_CD (정수형, 기본키), DEPT_NAME (가변문자 30자, NOT NULL)
+DROP TABLE IF EXISTS TB_DEPT;
 CREATE TABLE TB_DEPT(
 	DEPT_CD INT PRIMARY KEY COMMENT '부서코드', 
     DEPT_NAME VARCHAR(30) NOT NULL COMMENT '부서명'
@@ -12,7 +13,7 @@ CREATE TABLE TB_DEPT(
 -- 컬럼: EMP_NO (정수형, 기본키), EMP_NAME (가변문자 20자, NOT NULL), 
 --       GENDER (고정문자 1자, 'M' 또는 'F'만 허용하도록 CHECK 제약조건 설정),
 --       DEPT_CD (정수형, TB_DEPT 테이블의 DEPT_CD를 참조하는 외래키 설정)
-DROP TABLE TB_EMP;
+DROP TABLE IF EXISTS TB_EMP;
 CREATE TABLE TB_EMP(
 	EMP_NO INT PRIMARY KEY COMMENT '사원번호', 
     EMP_NAME VARCHAR(20) NOT NULL COMMENT '사원명',
@@ -54,10 +55,10 @@ TRUNCATE TABLE TB_EMP;
 -- 문제 10. (DROP - 테이블 안전 삭제)
 -- 외래키(FK) 참조 관계 때문에 일반적인 삭제가 불가능한 상황이라고 가정하고, 
 -- 외래키 검사를 잠시 끄고 TB_EMP와 TB_DEPT 테이블을 안전하게 모두 삭제한 뒤 검사를 다시 켜시오.
-SET FOREIGN_KEY_CHECK = 0;
-DROP TABLE TB_EMP;
-DROP TABLE TB_DEPT;
-SET FOREIGN_KEY_CHECK = 1;
+SET FOREIGN_KEY_CHECKS = 0;
+DROP TABLE IF EXISTS TB_EMP;
+DROP TABLE IF EXISTS TB_DEPT;
+SET FOREIGN_KEY_CHECKS = 1;
 
 -- foreign key 제약조건명 확인용--
 SELECT CONSTRAINT_NAME, TABLE_NAME, REFERENCED_TABLE_NAME 
@@ -65,5 +66,5 @@ FROM information_schema.REFERENTIAL_CONSTRAINTS;
 -- ------------------------ --
 
 -- 또는
-ALTER TABLE TB_EMP DROP FOREIGN KEY tb_emp_ibfk_1;
-DROP TABLE IF EXISTS TB_EMP;
+-- ALTER TABLE TB_EMP DROP FOREIGN KEY tb_emp_ibfk_1;
+-- DROP TABLE IF EXISTS TB_EMP;
