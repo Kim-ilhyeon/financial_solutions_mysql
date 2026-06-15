@@ -1,6 +1,7 @@
+use tdb;
 -- 문제 1.
 -- '노옹철' 사원과 같은 부서(DEPT_CODE)에 속한 사원들의 사원명, 부서코드, 입사일을 조회하시오.
-SELECT EMP_NAME, DEPT_CODE
+SELECT EMP_NAME, DEPT_CODE, HIRE_DATE
 FROM EMPLOYEE
 WHERE DEPT_CODE = (
 	SELECT DEPT_CODE
@@ -33,6 +34,14 @@ SELECT EMP_NAME, DEPT_CODE, SALARY
 FROM EMPLOYEE
 	JOIN DEPARTMENT ON (DEPT_CODE = DEPT_ID)
 WHERE DEPT_TITLE IN ('총무부', '마케팅부');
+
+SELECT EMP_NAME, DEPT_CODE, SALARY
+FROM EMPLOYEE
+WHERE DEPT_CODE IN (
+	SELECT DEPT_ID
+    FROM DEPARTMENT
+    WHERE DEPT_TITLE IN ('총무부', '마케팅부')
+	);
 
 -- 문제 5. 
 -- 직급이 '과장'인 사원들 중 어느 한 명의 급여보다라도 더 많이 받는 '대리' 사원의 사원명, 직급명, 급여를 조회하시오.
