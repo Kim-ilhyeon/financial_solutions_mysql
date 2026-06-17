@@ -132,6 +132,37 @@ SELECT DEPT_CODE, AVG(SALARY) AS avg_sal
 FROM EMPLOYEE
 GROUP BY DEPT_CODE;
 
+-- 문제 1
+-- EMPLOYEE 테이블에서 사번(EMP_ID), 직원명(EMP_NAME), 직급코드(JOB_CODE)만 조회하는 인라인 뷰를 만들고,
+-- 그 가상 테이블에서 직급코드가 'J5' 또는 'J6'인 사원만 조회하시오.
+SELECT *
+FROM (
+	SELECT EMP_ID, EMP_NAME, JOB_CODE
+    FROM EMPLOYEE
+    ) AS V
+WHERE V.JOB_CODE IN ('J5', 'J6');
+
+
+-- 문제 2.
+-- 각 부서별(DEPT_CODE)로 가장 높은 급여(MAX_SAL)를 구하는 인라인 뷰를 작성하고, 
+-- 이를 EMPLOYEE 테이블과 조인하여 '자신이 속한 부서에서 가장 높은 급여를 받는 사원'의
+-- 직원명(EMP_NAME), 부서코드(DEPT_CODE), 급여(SALARY)를 조회하시오.
+SELECT E.EMP_NAME, E.DEPT_CODE, E.SALARY
+FROM EMPLOYEE E
+	JOIN (
+    SELECT DEPT_CODE, MAX(SALARY) AS MAX_SAL
+	FROM EMPLOYEE
+	GROUP BY DEPT_CODE
+    ) AS G ON (E.DEPT_CODE = G.DEPT_CODE)
+WHERE E.SALARY = G.MAX_SAL;
+--     ) AS G ON (E.DEPT_CODE = G.DEPT_CODE AND E.SALARY = G.MAX_SAL);
+
+-- 문제 3
+-- 입사일(HIRE_DATE)이 가장 빠른(오래된) '최고참 사원 3명'의 직원명과 입사일을 조회하시오.
+SELECT EMP_NAME, HIRE_DATE
+FROM EMPLOYEE
+ORDER BY HIRE_DATE
+LIMIT 3;
 
 
 
